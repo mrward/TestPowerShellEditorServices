@@ -26,6 +26,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text;
 using MonoDevelop.Core.Execution;
 
 namespace PowerShellEditorServicesTest
@@ -61,7 +62,8 @@ namespace PowerShellEditorServicesTest
 				RedirectStandardError = true,
 				RedirectStandardOutput = true,
 				UseShellExecute = false,
-				RedirectStandardInput = true
+				RedirectStandardInput = true,
+				StandardOutputEncoding = Encoding.UTF8
 			};
 
 			process = new ProcessWrapper ();
