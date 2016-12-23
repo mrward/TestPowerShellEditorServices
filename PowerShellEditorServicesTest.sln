@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerShellEditorServicesTest", "PowerShellEditorServicesTest\PowerShellEditorServicesTest.csproj", "{63C24DDB-A299-4647-A221-41A4BDE26A18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerShellEditorServices.Protocol", "PowerShellEditorServices.Protocol\PowerShellEditorServices.Protocol.csproj", "{09365A94-E8C0-4735-88F8-15CFF6CDBAEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{63C24DDB-A299-4647-A221-41A4BDE26A18}.Debug|x86.Build.0 = Debug|x86
 		{63C24DDB-A299-4647-A221-41A4BDE26A18}.Release|x86.ActiveCfg = Release|x86
 		{63C24DDB-A299-4647-A221-41A4BDE26A18}.Release|x86.Build.0 = Release|x86
+		{09365A94-E8C0-4735-88F8-15CFF6CDBAEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{09365A94-E8C0-4735-88F8-15CFF6CDBAEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{09365A94-E8C0-4735-88F8-15CFF6CDBAEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{09365A94-E8C0-4735-88F8-15CFF6CDBAEE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

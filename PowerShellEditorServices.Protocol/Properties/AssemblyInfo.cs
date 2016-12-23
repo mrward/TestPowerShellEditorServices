@@ -1,5 +1,5 @@
 ﻿//
-// Program.cs
+// AssemblyInfo.cs
 //
 // Author:
 //       Matt Ward <matt.ward@xamarin.com>
@@ -23,53 +23,29 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using Microsoft.PowerShell.EditorServices.Protocol.Client;
-using Microsoft.PowerShell.EditorServices.Protocol.MessageProtocol.Channel;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
-namespace PowerShellEditorServicesTest
-{
-	class MainClass
-	{
-		public static void Main (string[] args)
-		{
-			try {
-				var program = new MainClass ();
-				program.Run ();
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
+// Information about this assembly is defined by the following attributes. 
+// Change them to the values specific to your project.
 
-		void Run ()
-		{
-			var session = new PowerShellSession ();
-			session.Started += Session_Started;
-			session.Start ();
+[assembly: AssemblyTitle ("PowerShellEditorServices.Protocol")]
+[assembly: AssemblyDescription ("")]
+[assembly: AssemblyConfiguration ("")]
+[assembly: AssemblyCompany ("")]
+[assembly: AssemblyProduct ("")]
+[assembly: AssemblyCopyright ("Xamarin Inc. (http://xamarin.com)")]
+[assembly: AssemblyTrademark ("")]
+[assembly: AssemblyCulture ("")]
 
-			System.Threading.Thread.Sleep (1000);
-			Console.WriteLine ("Press a key to quit.");
-			Console.ReadKey ();
+// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
+// The form "{Major}.{Minor}.*" will automatically update the build and revision,
+// and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-			session.Stop ();
-		}
+[assembly: AssemblyVersion ("1.0.*")]
 
-		void Session_Started (object sender, EventArgs e)
-		{
-			try {
-				var session = (PowerShellSession)sender;
-				StartLanguageClient (session.SessionDetails).Wait ();
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
+// The following attributes are used to specify the signing key for the assembly, 
+// if desired. See the Mono documentation for more information about signing.
 
-		Task StartLanguageClient (SessionDetailsMessage sessionDetails)
-		{
-			var channel = new TcpSocketClientChannel (sessionDetails.LanguageServicePort);
-			var client = new LanguageServiceClient (channel);
-			return client.Start ();
-		}
-	}
-}
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile("")]
