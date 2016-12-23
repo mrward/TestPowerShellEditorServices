@@ -33,13 +33,22 @@ namespace PowerShellEditorServicesTest
 	class PowerShellSession
 	{
 		ProcessWrapper process;
+		PowerShellStdOutParser outputParser;
 
-		public PowerShellSession ()
+		public event EventHandler Started;
+
+		void OnStarted ()
 		{
+			Started?.Invoke (this, new EventArgs ());
+		}
+
+		public SessionDetailsMessage SessionDetails {
+			get { return outputParser?.SessionDetails; }
 		}
 
 		public void Start ()
 		{
+			outputParser = new PowerShellStdOutParser ();
 			string powerShellExePath = PowerShellPathLocator.PowerShellPath;
 
 			var argumentBuilder = new PowerShellArgumentsBuilder ();
@@ -67,7 +76,10 @@ namespace PowerShellEditorServicesTest
 		{
 			try {
 				Console.WriteLine ("Received: {0}{1}{0}{0}", Environment.NewLine, message);
-				//reader.OnData (message);
+
+				if (outputParser.Parse (message)) {
+					OnStarted ();
+				}
 			} catch (Exception ex) {
 				Console.WriteLine (ex);
 			}
@@ -89,18 +101,6 @@ namespace PowerShellEditorServicesTest
 				}
 				process = null;
 			}
-		}
-
-		//public void SendMessage (Message message)
-		//{
-		//	SendMessage (JsonConvert.SerializeObject (message));
-		//}
-
-		public void SendMessage (string message)
-		{
-			string fullMessage = string.Format ("Content-Length: {0}\r\n\r\n{1}", message.Length, message);
-			Console.WriteLine ("Sending: {0}{1}{0}{0}", Environment.NewLine, fullMessage);
-			process.StandardInput.Write (fullMessage);
 		}
 	}
 }

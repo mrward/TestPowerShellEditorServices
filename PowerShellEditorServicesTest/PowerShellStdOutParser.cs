@@ -1,5 +1,5 @@
 ﻿//
-// Program.cs
+// PowerShellStdOutParser.cs
 //
 // Author:
 //       Matt Ward <matt.ward@xamarin.com>
@@ -23,47 +23,24 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
+using Newtonsoft.Json;
 
 namespace PowerShellEditorServicesTest
 {
-	class MainClass
+	class PowerShellStdOutParser
 	{
-		public static void Main (string[] args)
+		public bool Parse (string message)
 		{
-			try {
-				var program = new MainClass ();
-				program.Run ();
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
+			message = message.Trim ();
+			if (message.Length == 0)
+				return false;
+
+			SessionDetails = JsonConvert.DeserializeObject<SessionDetailsMessage> (message);
+
+			return true;
 		}
 
-		void Run ()
-		{
-			var session = new PowerShellSession ();
-			session.Started += Session_Started;
-			session.Start ();
-
-			System.Threading.Thread.Sleep (1000);
-			Console.WriteLine ("Press a key to quit.");
-			Console.ReadKey ();
-
-			session.Stop ();
-		}
-
-		void Session_Started (object sender, EventArgs e)
-		{
-			try {
-				var session = (PowerShellSession)sender;
-				StartLanguageClient (session.SessionDetails);
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
-
-		void StartLanguageClient (SessionDetailsMessage sessionDetails)
-		{
-		}
+		public SessionDetailsMessage SessionDetails { get; private set; }
 	}
 }

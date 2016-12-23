@@ -1,5 +1,5 @@
 ﻿//
-// Program.cs
+// SessionDetailsMessage.cs
 //
 // Author:
 //       Matt Ward <matt.ward@xamarin.com>
@@ -23,47 +23,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
+
+using Newtonsoft.Json;
 
 namespace PowerShellEditorServicesTest
 {
-	class MainClass
+	/// <summary>
+	/// {"debugServicePort":20334,"languageServicePort":12046,"status":"started","channel":"tcp"}
+	/// </summary>
+	class SessionDetailsMessage
 	{
-		public static void Main (string[] args)
-		{
-			try {
-				var program = new MainClass ();
-				program.Run ();
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
+		[JsonProperty ("debugServicePort")]
+		public int DebugServicePort { get; set; }
 
-		void Run ()
-		{
-			var session = new PowerShellSession ();
-			session.Started += Session_Started;
-			session.Start ();
+		[JsonProperty ("languageServicePort")]
+		public int LanguageServicePort { get; set; }
 
-			System.Threading.Thread.Sleep (1000);
-			Console.WriteLine ("Press a key to quit.");
-			Console.ReadKey ();
+		[JsonProperty ("status")]
+		public string Status { get; set; }
 
-			session.Stop ();
-		}
-
-		void Session_Started (object sender, EventArgs e)
-		{
-			try {
-				var session = (PowerShellSession)sender;
-				StartLanguageClient (session.SessionDetails);
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
-			}
-		}
-
-		void StartLanguageClient (SessionDetailsMessage sessionDetails)
-		{
-		}
+		[JsonProperty ("channel")]
+		public string Channel { get; set; }
 	}
 }
